@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+initConfig()
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    signingConfigs {
+        release {
+            storeFile file('keystore.jks')
+            storePassword gradle.key_pass
+            keyAlias gradle.key_alias
+            keyPassword gradle.key_pass
+            v2SigningEnabled true
+        }
+    }
+
+    defaultConfig {
+
+        ndk {
+            abiFilters "arm64-v8a" //, "armeabi-v7a"
+        }
+
+        applicationId "com.example.zznative"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+
+        it.buildConfigField 'String', 'CHARLES_DOMAIN',    gradle.charles_domain
+        it.buildConfigField 'String', 'CHARLES_PORT',    gradle.charles_port
+        it.buildConfigField 'String', 'MIMT_DOMAIN',    gradle.mimt_domain
+        it.buildConfigField 'String', 'MIMT_PROT',    gradle.mimt_prot
+
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+//        useIR = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}
+
+def initConfig() {
+    Properties properties = new Properties()
+    File propertyFile = new File(rootDir.getAbsolutePath(), "local.properties")
+    properties.load(propertyFile.newDataInputStream())
+    gradle.ext.charles_domain = "\"${properties.getProperty("charles_domain")}\""
+    gradle.ext.charles_port = "\"${properties.getProperty("charles_port")}\""
+    gradle.ext.mimt_domain = "\"${properties.getProperty("mimt_domain")}\""
+    gradle.ext.mimt_prot = "\"${properties.getProperty("mimt_prot")}\""
+    gradle.ext.key_pass = "\"${properties.getProperty("key_pass")}\""
+    gradle.ext.key_alias = "\"${properties.getProperty("key_alias")}\""
+}
