@@ -1,8 +1,3 @@
-/*
-* Author: hluwa <hluwa888@gmail.com>
-* HomePage: https://github.com/hluwa
-* CreatedTime: 2020/3/8 22:42
-* */
 var jclazz = null;
 var jobj = null;
 
@@ -62,3 +57,33 @@ rpc.exports = {
     }
 }
 
+// 绕过付费
+function modifyLoginBean() {
+    Java.use("com.pinjam.pinjamcus.bean.UserInfoBean").getOcrComplete.implementation = function () {
+        // console.log("isComplete => "+this._isComplete)
+        return 1
+    }
+}
+
+function becomeSVip() {
+    Java.perform(function(){
+        const UserInfoBean = Java.use("com.pinjam.pinjamcus.bean.UserInfoBean")
+        Java.choose("com.pinjam.pinjamcus.bean.UserInfoBean", {
+            onMatch:function(instance) {
+                // var BasicUserInfoBeanClazz = Java.cast(instance.getClass())
+                printObj(instance)
+                // Java
+            },
+            onComplete:function(){}
+        })
+
+    })
+}
+
+function main() {
+    Java.perform(function () {
+        modifyLoginBean()
+    })
+}
+
+main()
