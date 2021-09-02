@@ -15,6 +15,7 @@
 - native层及java层 root检测
 - 反调试
 - 在native层实现网络api调用
+- 接入jetpack compose制作ui
 
 ## in the fulture
 - 整理接入 [vlmcsd](https://github.com/Wind4/vlmcsd)
