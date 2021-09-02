@@ -14,6 +14,7 @@ import android.widget.Toast
 import top.zzkshare.decoy.BuildConfig
 import top.zzkshare.decoy.R
 import kotlinx.android.synthetic.main.activity_main.*
+import top.zzkshare.decoy.ui.ZZFloatWindow
 import top.zzkshare.decoy.utils.AdbdServiceUtil
 import top.zzkshare.decoy.utils.IPTools
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.execJNI
@@ -54,6 +55,10 @@ ${IPTools.getIPByNative()}
 
         }
 
+        float_btn.setOnClickListener {
+            ZZFloatWindow.instance.addFloatWindow(this)
+        }
+
     }
 
     private fun execShell(cmd: String): String {
@@ -62,7 +67,6 @@ ${IPTools.getIPByNative()}
         Log.i("native cmd", result)
         return result
     }
-
 
 }
 
