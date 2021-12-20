@@ -17,5 +17,8 @@ class JNIInterfaceManager {
 
         @JvmStatic
         external fun getHostByName(str: String): String
+
+        @JvmStatic
+        external fun sendPostByNative(url: String, body: String): String
     }
 }

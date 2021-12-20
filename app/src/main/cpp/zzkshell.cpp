@@ -14,7 +14,6 @@ jstring decoy(
     const char *cmd = env->GetStringUTFChars(str, nullptr);
     // int ret = system(cmd.c_str());
     std::string ret = exec(cmd);
-
     // char* ret_s = std::to_string(ret);
     return env->NewStringUTF(ret.c_str());
 }

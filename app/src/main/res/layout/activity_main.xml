@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/adbd_btn"
         android:layout_marginTop="20dp"
         android:padding="10dp"
-        android:enabled="false"
+        android:enabled="true"
         android:text="vlmcsd" />
 
     <Button

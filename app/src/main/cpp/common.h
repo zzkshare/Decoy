@@ -6,6 +6,8 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <android/log.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #define TAG "zznative" // 这个是自定义的LOG的标识
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
@@ -19,8 +21,11 @@ jstring decoy(JNIEnv *env, jclass obj, jstring str);
 jstring decoy0(JNIEnv *env, jclass obj, jstring str);
 jstring decoy1(JNIEnv *env, jclass obj, jstring str);
 
+//jstring native_post(JNIEnv *env, jclass obj, jstring url, jstring body);
+
 static JNINativeMethod method_table[] = {
         {"execJNI", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy},
         {"execJNIWithRoot", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy0},
-        {"getHostByName", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy1}
+        {"getHostByName", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy1},
+//        {"sendPostByNative", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",(jstring)native_post}
 };

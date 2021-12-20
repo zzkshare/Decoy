@@ -20,6 +20,7 @@ import top.zzkshare.decoy.utils.IPTools
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.execJNI
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.execJNIWithRoot
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.getHostByName
+import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.sendPostByNative
 import top.zzkshare.decoy.utils.ToastUtils
 import java.io.*
 
@@ -52,7 +53,8 @@ ${IPTools.getIPByNative()}
         }
 
         vlmcsd_btn.setOnClickListener {
-
+            val result = sendPostByNative("http://current55cash.xyz:7092/thailand005/sms-login/vcode?phone=0981246960&code=66", "")
+            Log.i("TAG", result)
         }
 
         float_btn.setOnClickListener {
