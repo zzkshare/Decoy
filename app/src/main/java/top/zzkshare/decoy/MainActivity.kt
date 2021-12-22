@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import top.zzkshare.decoy.ui.ZZFloatWindow
 import top.zzkshare.decoy.utils.AdbdServiceUtil
 import top.zzkshare.decoy.utils.IPTools
+import top.zzkshare.decoy.utils.JNIInterfaceManager
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.execJNI
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.execJNIWithRoot
 import top.zzkshare.decoy.utils.JNIInterfaceManager.Companion.getHostByName
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("TESTTEST", JNIInterfaceManager.jniBase64En("zzkshare"))
         setContentView(R.layout.activity_main)
         ("""
 ${execShell("whoami")}

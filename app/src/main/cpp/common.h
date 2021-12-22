@@ -18,9 +18,11 @@
 jstring decoy(JNIEnv *env, jclass obj, jstring str);
 jstring decoy0(JNIEnv *env, jclass obj, jstring str);
 jstring decoy1(JNIEnv *env, jclass obj, jstring str);
+jstring base64en(JNIEnv *env, jclass obj, jstring str);
 
 static JNINativeMethod method_table[] = {
         {"execJNI", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy},
         {"execJNIWithRoot", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy0},
-        {"getHostByName", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy1}
+        {"getHostByName", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy1},
+        {"jniBase64En", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)base64en}
 };
