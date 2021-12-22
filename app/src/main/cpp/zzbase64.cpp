@@ -86,7 +86,17 @@ void base64_dec(const char *enc_data, char *out) {
     }
     int offset = 0;
     while (offset+4 < len_data) {
-        out[offset] = base64_decode_table[enc_data[offset]];
+        char a = base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT;
+        char b = base64_decode_table[enc_data[offset+1]] & MASK_BYTE_HIGH_4BIT;
+        char c = a << 2;
+        char d = b >> 6;
+        out[offset] = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT) << 2 | (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_HIGH_4BIT) >> 4;
+        out[offset+1] = (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_LOW_4BIT) << 4 | (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_HIGH_6BIT) >> 2;
+        out[offset+2] = (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_LOW_2BIT) << 6 | (base64_decode_table[enc_data[offset+3]] & MASK_BYTE_LOW_6BIT);
+        offset+=3;
+    }
+    if (enc_data[offset+1] == '=') {
+
     }
 }
 
