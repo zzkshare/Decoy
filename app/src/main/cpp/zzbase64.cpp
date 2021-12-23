@@ -73,31 +73,38 @@ void base64_enc(const char *data, char *out) {
 }
 
 /*
- *      |    M      |     a     |       n   |
- *      |01|00|11|01|01|10|00|01|01|10|11|10|
- *      |    T   |    W   |   F    |    u   |
+ *      |    M      |     a     |     n     |     M     |           |           |
+ *      |01|00|11|01|01|10|00|01|01|10|11|10|01|10|00|01|00|00|00|00|00|00|00|00|
+ *      |    T   |    W   |   F    |    u   |    T   |    Q   |   =    |  =
  */
-
 void base64_dec(const char *enc_data, char *out) {
-    int len_data = sizeof(enc_data);
+    int len_data = (int)strlen(enc_data);
     if (len_data % 4 != 0) {
         out[0] = '\0';
         return;
     }
+    int index = 0;
     int offset = 0;
     while (offset+4 < len_data) {
-        char a = base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT;
-        char b = base64_decode_table[enc_data[offset+1]] & MASK_BYTE_HIGH_4BIT;
-        char c = a << 2;
-        char d = b >> 6;
-        out[offset] = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT) << 2 | (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_HIGH_4BIT) >> 4;
-        out[offset+1] = (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_LOW_4BIT) << 4 | (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_HIGH_6BIT) >> 2;
-        out[offset+2] = (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_LOW_2BIT) << 6 | (base64_decode_table[enc_data[offset+3]] & MASK_BYTE_LOW_6BIT);
-        offset+=3;
+        out[index] = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT) << 2 | (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_HIGH_4BIT) >> 4;
+        out[index+1] = (base64_decode_table[enc_data[offset+1]] & MASK_BYTE_LOW_4BIT) << 4 | (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_HIGH_6BIT) >> 2;
+        out[index+2] = (base64_decode_table[enc_data[offset+2]] & MASK_BYTE_LOW_2BIT) << 6 | (base64_decode_table[enc_data[offset+3]] & MASK_BYTE_LOW_6BIT);
+        index+=3;
+        offset+=4;
     }
+    out[index++]  = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_6BIT) << 2 | (base64_decode_table[enc_data[++offset]] & MASK_BYTE_HIGH_4BIT) >> 4;
     if (enc_data[offset+1] == '=') {
-
+        out[index++] = '\0';
+        return;
     }
+    out[index++] = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_4BIT) << 4 | (base64_decode_table[enc_data[++offset]] & MASK_BYTE_HIGH_6BIT) >> 2;
+    if (enc_data[offset+1] == '=') {
+        out[index++] = '\0';
+        return;
+    }
+    out[index++] = (base64_decode_table[enc_data[offset]] & MASK_BYTE_LOW_2BIT) << 6 | (base64_decode_table[enc_data[++offset]] & MASK_BYTE_LOW_6BIT);
+    out[index++] = '\0';
+    return;
 }
 
 
