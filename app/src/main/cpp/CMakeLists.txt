@@ -21,6 +21,8 @@ add_library( # Sets the name of the library.
              # Provides a relative path to your source file(s).
              native-lib.cpp
              zzbase64.cpp
+             zzrc4.cpp
+        zzencrypt_tools.cpp
              zzkshell.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a

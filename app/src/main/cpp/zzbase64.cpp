@@ -9,7 +9,7 @@ static const char base64_code_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 
 
 // 基于ascii码表 对应相应的 base64 的值 62->+ , 63->/
-static const char base64_decode_table[] = {
+static const int base64_decode_table[] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
@@ -70,6 +70,7 @@ void base64_enc(const char *data, char *out) {
         out[index++] = base64_code_table[(pre_c & MASK_BYTE_LOW_4BIT) << 2];
         out[index++] = base64_pad;
     }
+    out[index++] = 0;
 }
 
 /*
@@ -108,17 +109,6 @@ void base64_dec(const char *enc_data, char *out) {
 }
 
 
-jstring base64en(JNIEnv *env, jclass obj, jstring str) {
-    const char *data = env->GetStringUTFChars(str, NULL);
-    int len = sizeof(data);
-    int base64_len = (len / 3 + 1) * 4;
-    char *out = (char *) malloc(base64_len);
-    base64_enc(data, out);
-    jstring ret = env->NewStringUTF(out);
-    env->ReleaseStringUTFChars(str, data);
-    free(out);
-    return ret;
-}
 
 
 //extern "C"

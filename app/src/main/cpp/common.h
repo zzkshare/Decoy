@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <android/log.h>
+#include "zzencrypt_tools.h"
 
 #define TAG "zznative" // 这个是自定义的LOG的标识
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
@@ -18,11 +19,12 @@
 jstring decoy(JNIEnv *env, jclass obj, jstring str);
 jstring decoy0(JNIEnv *env, jclass obj, jstring str);
 jstring decoy1(JNIEnv *env, jclass obj, jstring str);
-jstring base64en(JNIEnv *env, jclass obj, jstring str);
 
 static JNINativeMethod method_table[] = {
         {"execJNI", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy},
         {"execJNIWithRoot", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy0},
         {"getHostByName", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)decoy1},
-        {"jniBase64En", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)base64en}
+        {"jniBase64En", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)base64_encode},
+        {"jniBase64De", "(Ljava/lang/String;)Ljava/lang/String;",(jstring)base64_decode},
+        {"jniRc4En", "(Ljava/lang/String;[B)Ljava/lang/String;",(jstring)rc4},
 };

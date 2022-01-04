@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("TESTTEST", JNIInterfaceManager.jniBase64En("zzkshare"))
         setContentView(R.layout.activity_main)
         ("""
 ${execShell("whoami")}
@@ -58,7 +57,22 @@ ${IPTools.getIPByNative()}
         }
 
         float_btn.setOnClickListener {
-            ZZFloatWindow.instance.addFloatWindow(this)
+//            ZZFloatWindow.instance.addFloatWindow(this)
+            val byte = "zzkshare".toByteArray()
+            Log.i("TESTTEST", JNIInterfaceManager.jniBase64En(System.currentTimeMillis().toString()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", byte))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", byte))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", byte))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", byte))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey", "5vjVZyqSTHI=".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey","zzkshare".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey","zzkshare".toByteArray()))
+//            Log.i("TESTTEST", JNIInterfaceManager.jniRc4En("testkey","zzkshare".toByteArray()))
         }
 
     }

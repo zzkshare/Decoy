@@ -20,5 +20,11 @@ class JNIInterfaceManager {
 
         @JvmStatic
         external fun jniBase64En(str: String): String
+
+        @JvmStatic
+        external fun jniBase64De(str: String): String
+
+        @JvmStatic
+        external fun jniRc4En(key: String, content: ByteArray): String
     }
 }
